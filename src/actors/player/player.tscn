@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://chvnnga4gvbly"]
+
+[ext_resource type="Script" uid="uid://dpwjresarfbic" path="res://src/actors/player/player.gd" id="1_1x8di"]
+[ext_resource type="Texture2D" uid="uid://c0cqffm1k1j60" path="res://assets/textures/player_tilesheet.png" id="1_tps1c"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1x8di"]
+radius = 32.0
+height = 110.0
+
+[node name="Player" type="CharacterBody2D" unique_id=462487894]
+script = ExtResource("1_1x8di")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1556009566]
+texture = ExtResource("1_tps1c")
+hframes = 9
+vframes = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1230474143]
+shape = SubResource("CapsuleShape2D_1x8di")
