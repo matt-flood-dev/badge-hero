@@ -15,12 +15,10 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity.y += gravity * delta
 
-	# Handle Jump Input
-	if input_is_jump_just_pressed() and is_on_floor():
+	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
-	# Fetch Horizontal Input Direction
-	var direction = Input.get_axis("ui_left", "ui_right")
+	var direction = Input.get_axis("move_left", "move_right")
 
 	# Handle Velocity Calculation using Linear Interpolation
 	if direction != 0:
@@ -32,8 +30,3 @@ func _physics_process(delta: float) -> void:
 
 	# Execute kinematic physics movement and resolve collisions automatically
 	move_and_slide()
-
-
-# Helper function to capture jump inputs cleanly
-func input_is_jump_just_pressed() -> bool:
-	return Input.is_action_just_pressed("ui_accept") or Input.is_action_just_pressed("ui_up")
