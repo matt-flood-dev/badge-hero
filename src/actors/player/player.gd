@@ -15,9 +15,11 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity.y += gravity * delta
 
+    # Handle Jump
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
+    # Fetch Horizontal Input Direction
 	var direction = Input.get_axis("move_left", "move_right")
 
 	# Handle Velocity Calculation using Linear Interpolation

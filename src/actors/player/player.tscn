@@ -2,6 +2,11 @@
 
 [ext_resource type="Script" uid="uid://dpwjresarfbic" path="res://src/actors/player/player.gd" id="1_1x8di"]
 [ext_resource type="Texture2D" uid="uid://c0cqffm1k1j60" path="res://assets/textures/player_tilesheet.png" id="1_tps1c"]
+[ext_resource type="Script" uid="uid://bintp7mq8dpou" path="res://src/actors/player/state_machine.gd" id="3_8tnyb"]
+[ext_resource type="Script" uid="uid://bawqsjk7n03aa" path="res://src/actors/player/idle_state.gd" id="4_qdy1o"]
+[ext_resource type="Script" uid="uid://k46csmfhio7" path="res://src/actors/player/move_state.gd" id="5_nq65r"]
+[ext_resource type="Script" uid="uid://b7ev6jbqhock0" path="res://src/actors/player/jump_state.gd" id="6_wabo4"]
+[ext_resource type="Script" uid="uid://bp6dp5pupbuma" path="res://src/actors/player/fall_state.gd" id="7_b2jwx"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1x8di"]
 radius = 32.0
@@ -17,3 +22,18 @@ vframes = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1230474143]
 shape = SubResource("CapsuleShape2D_1x8di")
+
+[node name="StateMachine" type="Node" parent="." unique_id=1888727584]
+script = ExtResource("3_8tnyb")
+
+[node name="Idle" type="Node" parent="StateMachine" unique_id=1113237134]
+script = ExtResource("4_qdy1o")
+
+[node name="Move" type="Node" parent="StateMachine" unique_id=2037605156]
+script = ExtResource("5_nq65r")
+
+[node name="Jump" type="Node" parent="StateMachine" unique_id=1118100739]
+script = ExtResource("6_wabo4")
+
+[node name="Fall" type="Node" parent="StateMachine" unique_id=662148000]
+script = ExtResource("7_b2jwx")
