@@ -37,3 +37,10 @@ script = ExtResource("6_wabo4")
 
 [node name="Fall" type="Node" parent="StateMachine" unique_id=662148000]
 script = ExtResource("7_b2jwx")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=293047633]
+position_smoothing_enabled = true
+drag_left_margin = 0.1
+drag_top_margin = 0.1
+drag_right_margin = 0.1
+drag_bottom_margin = 0.1

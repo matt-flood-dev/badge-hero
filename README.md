@@ -28,7 +28,7 @@ The project directory separates static source assets (`assets/`) from compiled e
 ### Core Player System Architecture (`src/actors/player/`)
 This self-contained directory houses the entire player agent pipeline, acting as a plug-and-play component:
 
-* **`player.tscn`**: The composite visual and physical node hierarchy tree mapping out the layout boundaries of the player entity.
+* **`player.tscn`**: The composite visual and physical node hierarchy tree mapping out the layout boundaries of the player entity. It hosts the root physics body, structural collision matrices, visual sprite sheets, and an integrated **`Camera2D` component configured with linear positional smoothing and drag tracking windows** to maintain a framerate-independent viewport focus.
 * **`player.gd`**: The root controller script. It serves as a lightweight execution shell that simply triggers the engine's physical collision solver (`move_and_slide()`), deferring all behavioral velocity logic to the active state sub-component.
 * **`player_state.gd`**: The abstract parent class defining the interface contract for all states. It caches global environment variables and player references across the subsystem hierarchy.
 * **`state_machine.gd`**: The centralized component broker that intercepts engine runtime signals and marshals execution down to the active state node. It safely handles cleanup routines during state transitions.
