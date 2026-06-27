@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://dperk23ulufsd"]
+
+[ext_resource type="Script" uid="uid://dfb8andoyh7dr" path="res://src/objects/door/yellow_door.gd" id="1_gwmqy"]
+[ext_resource type="Texture2D" uid="uid://c5hcpgnnsb23y" path="res://assets/textures/platformPack_tilesheet.png" id="2_k8sdl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p84dr"]
+size = Vector2(64, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7nere"]
+size = Vector2(100, 128)
+
+[node name="YellowDoor" type="StaticBody2D" unique_id=477278692]
+script = ExtResource("1_gwmqy")
+
+[node name="ClosedSprite" type="Sprite2D" parent="." unique_id=40396473]
+texture = ExtResource("2_k8sdl")
+region_enabled = true
+region_rect = Rect2(448, 320, 64, 128)
+
+[node name="OpenSprite" type="Sprite2D" parent="." unique_id=334578313]
+visible = false
+texture = ExtResource("2_k8sdl")
+region_enabled = true
+region_rect = Rect2(320, 320, 64, 128)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2033650287]
+shape = SubResource("RectangleShape2D_p84dr")
+
+[node name="InteractionZone" type="Area2D" parent="." unique_id=683388915]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionZone" unique_id=2144410555]
+shape = SubResource("RectangleShape2D_7nere")

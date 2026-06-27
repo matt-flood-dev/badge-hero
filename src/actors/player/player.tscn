@@ -8,9 +8,8 @@
 [ext_resource type="Script" uid="uid://b7ev6jbqhock0" path="res://src/actors/player/jump_state.gd" id="6_wabo4"]
 [ext_resource type="Script" uid="uid://bp6dp5pupbuma" path="res://src/actors/player/fall_state.gd" id="7_b2jwx"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1x8di"]
-radius = 32.0
-height = 110.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8tnyb"]
+size = Vector2(63, 80)
 
 [node name="Player" type="CharacterBody2D" unique_id=462487894]
 script = ExtResource("1_1x8di")
@@ -21,7 +20,8 @@ hframes = 9
 vframes = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1230474143]
-shape = SubResource("CapsuleShape2D_1x8di")
+position = Vector2(0.5, 15)
+shape = SubResource("RectangleShape2D_8tnyb")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=293047633]
 position_smoothing_enabled = true

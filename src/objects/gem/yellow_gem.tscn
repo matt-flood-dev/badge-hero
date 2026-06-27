@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dr0wgmicprpxm"]
+
+[ext_resource type="Script" uid="uid://c3g4urypmgy0l" path="res://src/objects/gem/yellow_gem.gd" id="1_lybnm"]
+[ext_resource type="Texture2D" uid="uid://c5hcpgnnsb23y" path="res://assets/textures/platformPack_tilesheet.png" id="2_7jcol"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mn7hk"]
+radius = 14.035668
+
+[node name="YellowGem" type="Area2D" unique_id=1367613251]
+script = ExtResource("1_lybnm")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1081574716]
+texture = ExtResource("2_7jcol")
+region_enabled = true
+region_rect = Rect2(512, 208, 64, 32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1644884163]
+shape = SubResource("CircleShape2D_mn7hk")

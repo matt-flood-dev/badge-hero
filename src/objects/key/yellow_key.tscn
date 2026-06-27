@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://cgivehd725jdv"]
+
+[ext_resource type="Texture2D" uid="uid://c5hcpgnnsb23y" path="res://assets/textures/platformPack_tilesheet.png" id="1_84xoo"]
+[ext_resource type="Script" uid="uid://cw6d3kdkh1ft7" path="res://src/objects/key/yellow_key.gd" id="1_hwnj8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0hoca"]
+size = Vector2(44, 29)
+
+[node name="YellowKey" type="Area2D" unique_id=283607779]
+visible = false
+script = ExtResource("1_hwnj8")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1427958019]
+texture = ExtResource("1_84xoo")
+region_enabled = true
+region_rect = Rect2(512, 272, 64, 32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=443274759]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_0hoca")
