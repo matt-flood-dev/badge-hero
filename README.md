@@ -1,56 +1,41 @@
-# \# Badge Hero (CS50 Final Project)
+# Badge Hero (CS50 Final Project)
 
-# 
+## Project Description
+**Badge Hero** is a 2D kinematic platformer built using the Godot 4.x game engine and written in GDScript. The primary technical objective of this project is to implement robust, framerate-independent character physics while showcasing intermediate and advanced software engineering patterns. 
 
-# \## Project Description
+Rather than relying on monolithic scripts or brittle nested conditional branches (`if/else` spaghetti logic) to manage character behaviors, this project implements a decoupled, node-based **Finite State Machine (FSM)**. This architecture ensures deterministic state boundaries, making the player controller highly scalable, easily testable, and strictly compliant with modern clean-code paradigms.
 
-# \*\*Badge Hero\*\* is a 2D kinematic platformer built from the ground up using the Godot 4.x game engine and written in GDScript. The project focuses on implementing robust, framerate-independent physics, clean input mapping, and an industry-standard modular file architecture. 
+---
 
-# 
+## Technical Architecture & Design Patterns
 
-# Rather than relying on generic engine templates or black-box physics wrappers, the movement mechanics utilize custom linear interpolation models to calculate friction, acceleration, and gravity parameters over a discrete time delta. This ensures stable collision resolution and a predictable, responsive player experience across varying hardware configurations.
+### 1. Finite State Machine (FSM)
+The core player logic is broken down into discrete computational states. By enforcing a strict architectural rule that the entity can only occupy a single state at any given atomic tick, we eliminate overlapping states and race conditions during physics integration.
 
-# 
+### 2. Polymorphism via Class Inheritance
+To satisfy the computer science principle of **Separation of Concerns (SoC)**, the state machine leverages polymorphism. A base virtual class (`PlayerState`) establishes the generic interface hooks (`enter`, `exit`, `physics_update`). Concrete states extend this parent class, allowing the state machine manager to process lifecycle ticks uniformly without needing to know the low-level logical details of individual states.
 
-# \---
+---
 
-# 
+## File Schema & Directory Index
 
-# \## Technical Architecture \& File Descriptions
+The project directory separates static source assets (`assets/`) from compiled executable runtime engine logic (`src/`).
 
-# 
+### System Configurations
+* **`project.godot`**: The central application configuration manifest. Defines viewport dimension parameters ($640 \times 360$ pixels), aspect ratio scaling policies, and maps hardware-agnostic input actions (`move_left`, `move_right`, `jump`).
+* **`.gitignore`**: Version-control tracking mask configured to prevent local engine cache files (`.godot/`) from polluting the shared source repository.
 
-# To enforce a strict \*\*Separation of Concerns (SoC)\*\*, the project directory is bifurcated into distinct conceptual layers: `src/` for executable engine configurations and scripts, and `assets/` for static graphics and binary textures. This architectural choice decouples data from logic, allowing assets to be swapped or scaled dynamically without introducing regression bugs into the underlying codebase.
+### Core Player System Architecture (`src/actors/player/`)
+This self-contained directory houses the entire player agent pipeline, acting as a plug-and-play component:
 
-# 
+* **`player.tscn`**: The composite visual and physical node hierarchy tree mapping out the layout boundaries of the player entity.
+* **`player.gd`**: The root controller script. It serves as a lightweight execution shell that simply triggers the engine's physical collision solver (`move_and_slide()`), deferring all behavioral velocity logic to the active state sub-component.
+* **`player_state.gd`**: The abstract parent class defining the interface contract for all states. It caches global environment variables and player references across the subsystem hierarchy.
+* **`state_machine.gd`**: The centralized component broker that intercepts engine runtime signals and marshals execution down to the active state node. It safely handles cleanup routines during state transitions.
+* **`idle_state.gd`**: Manages standing-state routines, executing continuous horizontal kinetic friction dampening while monitoring input streams for movement or jump overrides.
+* **`move_state.gd`**: Handles ground-based kinematic translation. Computes linear interpolation formulas (`move_toward`) over a discrete frame delta to execute responsive acceleration, and updates the visual rendering layer's texture frames dynamically.
+* **`jump_state.gd`**: Injects an instantaneous upward vertical vector impulse force, tracks variable airborne deceleration curves, and triggers transitions upon hitting peak apex thresholds.
+* **`fall_state.gd`**: Applies environmental gravitational acceleration constants dynamically down the Y-axis and runs high-precision raycast queries to handle floor impact resolution.
 
-# \### Core Project Configurations
-
-# \* \*\*`project.godot`\*\*: The primary configuration manifest for the application context. This file handles global namespace overrides, specifies target viewport resolutions ($640 \\times 360$ pixels), enforces aspect-ratio scaling modes, and registers hardware-agnostic input abstraction keys (e.g., binding standard keyboard layouts to abstract actions like `move\_left` and `move\_right`).
-
-# \* \*\*`.gitignore`\*\*: A version-control exclusion manifest configured specifically for Godot environments. It explicitly masks volatile metadata directories (like `.godot/`) and runtime local cache structures to prevent repository pollution and maintain a lightweight source history.
-
-# 
-
-# \### The Actors Directory (`src/actors/`)
-
-# This directory contains self-contained, modular blueprints for independent game entities. These files act as autonomous software components that can be instantiated across any environment layout without structural dependencies.
-
-# \* \*\*`src/actors/player/player.tscn`\*\*: The composite scene tree definition for the user-controlled agent. It integrates a `CharacterBody2D` root physics node, a `Sprite2D` node for processing matrix-sliced sprite sheets, and a `CollisionShape2D` node running a capsule boundary configuration for physical interaction layout.
-
-# \* \*\*`src/actors/player/player.gd`\*\*: The core kinematic execution script. It processes input events inside the engine's fixed `\_physics\_process` tick rate. By multiplying vector translations against a fractional `delta` value, it guarantees uniform movement velocities independent of rendering hardware framerates. Horizontal movement leverages linear accumulation through `move\_toward()` to achieve smooth acceleration and rapid kinetic friction dampening.
-
-# 
-
-# \### The Levels Directory (`src/levels/`)
-
-# This directory houses specific map layouts and gameplay instances, acting as the structural environments where modular actors are loaded and executed.
-
-# \* \*\*`src/levels/world.tscn`\*\*: The primary test runtime environment scene. It serves as the global root origin where the decoupled `player.tscn` module is instanced. It configures a structural `StaticBody2D` boundary running a rectangular matrix shape alongside a `ColorRect` visual primitive to resolve terrain collision limits visually during testing.
-
-# 
-
-# \### The Assets Directory (`assets/`)
-
-# \* \*\*`assets/textures/player\_tilesheet.png`\*\*: A public domain (CC0) 2D character texture grid atlas containing multi-frame character states. It is systematically parsed inside the scene parameters via geometric row and column calculations (`Hframes` and `Vframes`) to isolate specific rendering regions dynamically without multiplying draw-call overhead.
-
+### Environmental Design Layouts (`src/levels/`)
+* **`world.tscn`**: The primary compilation environment scene where the player module is instantiated over a physical static ground collision plane to evaluate physics interactions.
