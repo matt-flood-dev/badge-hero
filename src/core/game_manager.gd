@@ -45,10 +45,8 @@ func obtain_key() -> void:
 	print("Objective Key secured. Level progression unlocked.")
 
 
-# Called when the player's health reaches zero. Resets level progress and respawns the player.
-func handle_player_death(player: Node2D) -> void:
-	print("Player health depleted. Resetting level progress and respawning...")
+# Resets progress and reloads the current level scene from scratch.
+func handle_player_death(_player: Node2D = null) -> void:
+	print("Player health depleted. Reloading level...")
 	reset_game_state()
-
-	if player.has_method("respawn_after_death"):
-		player.respawn_after_death()
+	get_tree().call_deferred("reload_current_scene")

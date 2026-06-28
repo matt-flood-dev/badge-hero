@@ -8,7 +8,7 @@ extends PlayerState
 
 
 # --- DATA & REFERENCES ---
-@onready var sprite: Sprite2D = $"../../Sprite2D"
+@onready var sprite: AnimatedSprite2D = $"../../AnimatedSprite2D"
 
 # Jump physics threshold settings
 const JUMP_VELOCITY = -400.0
@@ -45,8 +45,7 @@ func physics_update(delta: float) -> void:
 
 # --- PUBLIC METHODS ---
 func enter() -> void:
-	# Instantly switch rendering frame to jump graphics pose (Frame index 3)
-	sprite.frame = 3
+	sprite.play("jump")
 	# Apply an immediate negative vertical impulse force to initiate flight tracking
 	player.velocity.y = JUMP_VELOCITY
 

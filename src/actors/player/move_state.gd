@@ -8,7 +8,7 @@ extends PlayerState
 
 
 # --- DATA & REFERENCES ---
-@onready var sprite: Sprite2D = $"../../Sprite2D"
+@onready var sprite: AnimatedSprite2D = $"../../AnimatedSprite2D"
 
 # Kinematic movement configuration boundaries
 const SPEED = 200.0
@@ -31,11 +31,7 @@ func physics_update(delta: float) -> void:
 	
 	# Handle dynamic horizontal texture orientation mapping
 	if direction != 0:
-		# Flip texture on its horizontal axis if traveling along negative X vector coordinates
 		sprite.flip_h = (direction < 0)
-		# Ticker oscillation math to flip-flop across frame index indices 1 and 2 for walking animation
-		sprite.frame = 1 if Engine.get_physics_frames() % 20 > 10 else 2
-		
 	# Transition Boundary: Detect running off a ledge into open space
 	if not player.is_on_floor():
 		state_machine.transition_to("fall")
@@ -53,7 +49,7 @@ func physics_update(delta: float) -> void:
 
 # --- PUBLIC METHODS ---
 func enter() -> void:
-	pass
+	sprite.play("move")
 
 
 func exit() -> void:

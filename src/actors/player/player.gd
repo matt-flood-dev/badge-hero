@@ -52,14 +52,6 @@ func return_to_spawn() -> void:
 	velocity = Vector2.ZERO
 
 
-# Restores health and returns the player to their spawn point after a full death.
-func respawn_after_death() -> void:
-	current_health = max_health
-	health_changed.emit(current_health)
-	_update_health_ui()
-	return_to_spawn()
-
-
 # --- PRIVATE METHODS ---
 func _update_health_ui() -> void:
 	if not hearts_container:

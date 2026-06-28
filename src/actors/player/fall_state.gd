@@ -8,7 +8,7 @@ extends PlayerState
 
 
 # --- DATA & REFERENCES ---
-@onready var sprite: Sprite2D = $"../../Sprite2D"
+@onready var sprite: AnimatedSprite2D = $"../../AnimatedSprite2D"
 
 const SPEED = 200.0
 const ACCELERATION = 1200.0
@@ -46,8 +46,7 @@ func physics_update(delta: float) -> void:
 
 # --- PUBLIC METHODS ---
 func enter() -> void:
-	# Instantly switch rendering frame to falling graphics pose (Frame index 4)
-	sprite.frame = 4
+	sprite.play("fall")
 
 
 func exit() -> void:

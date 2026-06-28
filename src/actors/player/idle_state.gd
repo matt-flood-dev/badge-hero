@@ -9,7 +9,7 @@ extends PlayerState
 
 # --- DATA & REFERENCES ---
 # Node path reference back to the player's primary visual texture controller
-@onready var sprite: Sprite2D = $"../../Sprite2D"
+@onready var sprite: AnimatedSprite2D = $"../../AnimatedSprite2D"
 
 
 # --- LIFECYCLE CALLBACKS ---
@@ -41,8 +41,7 @@ func physics_update(delta: float) -> void:
 
 # --- PUBLIC METHODS ---
 func enter() -> void:
-	# Lock visual layout to static resting frame (Frame index 0)
-	sprite.frame = 0
+	sprite.play("idle")
 	# Cease all residual horizontal kinetic energy vectors immediately on entry
 	player.velocity.x = 0.0
 
