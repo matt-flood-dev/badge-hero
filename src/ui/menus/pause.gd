@@ -14,17 +14,18 @@ extends CanvasLayer
 # process_mode is ALWAYS on this scene so it can receive input while the tree is paused.
 func _ready() -> void:
 	visible = false
-	GameManager.game_over.connect(_on_game_over)
+	GameManager.pause_opened.connect(_on_pause_opened)
+	GameManager.pause_closed.connect(_on_pause_closed)
 
 
 # --- INPUT HANDLING ---
 func _unhandled_input(event: InputEvent) -> void:
-	if not visible:
+	if not event.is_action_pressed("pause", false, true):
 		return
 
-	# Any key restarts the level for now.
-	if event.is_pressed() and not event.is_echo():
-		GameManager.restart_game()
+	# Same input toggles pause on and off.
+	GameManager.toggle_pause()
+	get_viewport().set_input_as_handled()
 
 
 # --- UPDATE LOOPS ---
@@ -34,5 +35,9 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 # --- PRIVATE METHODS ---
-func _on_game_over() -> void:
+func _on_pause_opened() -> void:
 	visible = true
+
+
+func _on_pause_closed() -> void:
+	visible = false

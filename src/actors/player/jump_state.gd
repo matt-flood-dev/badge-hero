@@ -10,12 +10,10 @@ extends PlayerState
 # --- DATA & REFERENCES ---
 @onready var sprite: AnimatedSprite2D = $"../../AnimatedSprite2D"
 
-# Jump physics threshold settings
 const JUMP_VELOCITY = -400.0
 const SPEED = 200.0
 const ACCELERATION = 1200.0
 
-# Fetch the global environmental default gravity scaling from the project registry
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 
@@ -27,18 +25,15 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 # --- UPDATE LOOPS ---
 func physics_update(delta: float) -> void:
-	# Accumulate downward gravity acceleration onto the vertical velocity vector
 	player.velocity.y += gravity * delta
-	
-	# Process mid-air horizontal steering vector logic overrides
+
 	var direction = Input.get_axis("move_left", "move_right")
 	player.velocity.x = move_toward(player.velocity.x, direction * SPEED, ACCELERATION * delta)
-	
-	# Orient texture facing direction mid-flight
+
 	if direction != 0:
 		sprite.flip_h = (direction < 0)
 
-	# Transition Boundary: Upward upward velocity vector momentum depletes completely
+	# Once upward motion stops, gravity takes over in the fall state.
 	if player.velocity.y >= 0:
 		state_machine.transition_to("fall")
 
@@ -46,7 +41,6 @@ func physics_update(delta: float) -> void:
 # --- PUBLIC METHODS ---
 func enter() -> void:
 	sprite.play("jump")
-	# Apply an immediate negative vertical impulse force to initiate flight tracking
 	player.velocity.y = JUMP_VELOCITY
 
 

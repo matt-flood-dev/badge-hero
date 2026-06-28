@@ -12,6 +12,7 @@ var is_revealed: bool = false
 
 # --- LIFECYCLE CALLBACKS ---
 func _ready() -> void:
+	# Tell GameManager how many badges exist in this level.
 	GameManager.register_level_badge()
 	monitoring = false
 	body_entered.connect(_on_body_entered)
@@ -34,7 +35,6 @@ func _reveal_badge() -> void:
 	monitoring = true
 
 
-# Evaluates overlapping bodies to confirm player collision and trigger level victory
 func _on_body_entered(body: Node2D) -> void:
 	if not is_revealed:
 		return
@@ -43,7 +43,6 @@ func _on_body_entered(body: Node2D) -> void:
 		_trigger_level_victory()
 
 
-# Locks down player movement or states and runs the final level completion sequences
 func _trigger_level_victory() -> void:
 	set_deferred("monitoring", false)
 	GameManager.collect_badge()

@@ -1,4 +1,3 @@
-
 extends Control
 
 # --- SIGNALS ---
@@ -14,7 +13,6 @@ extends Control
 
 # --- LIFECYCLE CALLBACKS ---
 func _ready() -> void:
-	# Default to showing a healthy, full container
 	set_filled(true)
 
 
@@ -37,6 +35,7 @@ func set_filled(is_filled: bool) -> void:
 
 # --- PRIVATE METHODS ---
 func _ensure_nodes() -> void:
+	# Guard against _ready order issues when the player updates hearts very early.
 	if full_heart == null:
 		full_heart = $FullHeart
 		empty_heart = $EmptyHeart

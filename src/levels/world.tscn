@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://b3b4ha7mklb14" path="res://src/ui/menus/game_over.tscn" id="10_gameover"]
 [ext_resource type="PackedScene" uid="uid://bwmw85hul2dau" path="res://src/ui/hud/objectives.tscn" id="11_objective"]
 [ext_resource type="PackedScene" uid="uid://dlipn8lfncsq" path="res://src/ui/menus/victory.tscn" id="12_victory"]
+[ext_resource type="PackedScene" path="res://src/ui/menus/pause.tscn" id="13_pause"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_q35l7"]
 texture = ExtResource("2_jimqh")
@@ -1085,4 +1086,6 @@ offset_bottom = 40.0
 
 [node name="GameOverScreen" parent="." unique_id=1015961123 instance=ExtResource("10_gameover")]
 
-[node name="VictoryScreen" parent="." instance=ExtResource("12_victory")]
+[node name="VictoryScreen" parent="." unique_id=741119070 instance=ExtResource("12_victory")]
+
+[node name="PauseScreen" parent="." unique_id=1757150286 instance=ExtResource("13_pause")]

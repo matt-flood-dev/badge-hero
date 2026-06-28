@@ -59,7 +59,7 @@ func _physics_process(delta: float) -> void:
 
 
 # --- PRIVATE METHODS ---
-# Positions the ledge-detection ray at the leading foot edge based on patrol heading
+# Place the ledge ray at the leading foot so we detect open air before walking off a platform.
 func _configure_floor_ray() -> void:
 	var foot_y: float = collision_shape.position.y + (collision_shape.shape as RectangleShape2D).size.y / 2.0
 	floor_ray.enabled = true
@@ -68,7 +68,6 @@ func _configure_floor_ray() -> void:
 	floor_ray.force_raycast_update()
 
 
-# Flips patrol heading when a wall or open ledge is detected ahead
 func _evaluate_patrol_turn() -> void:
 	if is_turn_locked:
 		return
@@ -81,7 +80,7 @@ func _evaluate_patrol_turn() -> void:
 		_turn_around()
 
 
-# Returns true when the body is colliding with a surface blocking current patrol heading
+# Only treat a collision as a blocking wall if it faces against our current patrol direction.
 func _is_wall_ahead() -> bool:
 	if not is_on_wall():
 		return false
@@ -89,7 +88,6 @@ func _is_wall_ahead() -> bool:
 	return get_wall_normal().x * patrol_direction < 0.0
 
 
-# Returns true when grounded but no floor is detected ahead at the leading foot edge
 func _is_ledge_ahead() -> bool:
 	if not is_on_floor():
 		return false
@@ -98,7 +96,6 @@ func _is_ledge_ahead() -> bool:
 	return not floor_ray.is_colliding()
 
 
-# Inverts horizontal patrol direction and mirrors the sprite to match
 func _turn_around() -> void:
 	if is_turn_locked:
 		return
@@ -107,15 +104,14 @@ func _turn_around() -> void:
 	patrol_direction *= -1
 	sprite.flip_h = patrol_direction < 0
 	_configure_floor_ray()
+	# Brief lock stops the enemy flipping every frame while still touching a wall or ledge.
 	get_tree().create_timer(0.2).timeout.connect(_release_turn_lock)
 
 
-# Prevents rapid back-to-back direction flips while still touching a wall or ledge
 func _release_turn_lock() -> void:
 	is_turn_locked = false
 
 
-# Selects idle or move animation based on grounded locomotion state
 func _update_animation() -> void:
 	if is_on_floor() and abs(velocity.x) > 0.0:
 		if sprite.animation != "move":
@@ -125,18 +121,16 @@ func _update_animation() -> void:
 			sprite.play("idle")
 
 
-# Routes overlap events into the shared player contact handler
 func _on_hurtbox_body_entered(body: Node2D) -> void:
 	_handle_player_overlap(body)
 
 
-# Re-check overlaps each frame so stomps still register after a side hit
+# body_entered only fires once, so we re-check overlaps every frame for stomps after a side hit.
 func _check_player_overlaps() -> void:
 	for body in hurtbox.get_overlapping_bodies():
 		_handle_player_overlap(body)
 
 
-# Routes player overlap through stomp defeat or contact damage pipelines
 func _handle_player_overlap(body: Node2D) -> void:
 	if is_dead:
 		return
@@ -151,7 +145,7 @@ func _handle_player_overlap(body: Node2D) -> void:
 	_apply_contact_damage(body)
 
 
-# Returns true when the player's feet land on the upper portion of the enemy hitbox
+# Mario-style stomp: feet near the top of the enemy while moving downward or landing.
 func _is_player_stomping(body: Node2D) -> bool:
 	if body is not CharacterBody2D:
 		return false
@@ -170,7 +164,6 @@ func _is_player_stomping(body: Node2D) -> bool:
 	return body.velocity.y >= 0.0
 
 
-# Applies damage to the player while respecting the configured cooldown window
 func _apply_contact_damage(player: Node2D) -> void:
 	if not can_damage_player:
 		return
@@ -184,12 +177,10 @@ func _apply_contact_damage(player: Node2D) -> void:
 		get_tree().create_timer(damage_cooldown).timeout.connect(_reset_damage_cooldown)
 
 
-# Re-enables contact damage after the cooldown timer elapses
 func _reset_damage_cooldown() -> void:
 	can_damage_player = true
 
 
-# Plays the death animation, disables collisions, and removes the enemy from the scene
 func _defeat_enemy(player: Node2D) -> void:
 	if is_dead:
 		return
@@ -207,7 +198,6 @@ func _defeat_enemy(player: Node2D) -> void:
 	sprite.animation_finished.connect(_on_death_animation_finished, CONNECT_ONE_SHOT)
 
 
-# Cleans up the enemy node once the non-looping death animation completes
 func _on_death_animation_finished() -> void:
 	queue_free()
 	GameManager.notify_enemy_defeated.call_deferred()

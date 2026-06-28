@@ -24,6 +24,7 @@ var pending_spawn_after_hurt: bool = false
 func _ready() -> void:
 	spawn_position = global_position
 	current_health = max_health
+	# Hearts may not be ready on the same frame, so update the HUD after the scene settles.
 	call_deferred("_update_health_ui")
 	health_changed.emit(current_health)
 
@@ -33,6 +34,7 @@ func _ready() -> void:
 
 # --- UPDATE LOOPS ---
 func _physics_process(_delta: float) -> void:
+	# Movement logic lives in the state machine; this node only applies the final velocity.
 	move_and_slide()
 
 
@@ -51,6 +53,7 @@ func take_damage(amount: int, from_global_position: Vector2 = Vector2.ZERO) -> v
 		GameManager.handle_player_death(self)
 		return
 
+	# Knockback direction points away from whatever hurt the player.
 	if from_global_position != Vector2.ZERO:
 		knockback_from = global_position - from_global_position
 	else:
@@ -59,7 +62,7 @@ func take_damage(amount: int, from_global_position: Vector2 = Vector2.ZERO) -> v
 	state_machine.transition_to("hurt")
 
 
-# Applies kill-floor damage and respawns at spawn once the hurt state completes.
+# Kill floor damage uses the same hurt flow, but respawns after the animation instead of immediately.
 func apply_hazard_fall(from_global_position: Vector2) -> void:
 	if current_health <= 0 or is_invincible:
 		return
@@ -68,7 +71,6 @@ func apply_hazard_fall(from_global_position: Vector2) -> void:
 	take_damage(1, from_global_position)
 
 
-# Moves the player back to their spawn point without altering health.
 func return_to_spawn() -> void:
 	global_position = spawn_position
 	velocity = Vector2.ZERO

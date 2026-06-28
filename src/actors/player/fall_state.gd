@@ -24,20 +24,16 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 # --- UPDATE LOOPS ---
 func physics_update(delta: float) -> void:
-	# Continuously accumulate down-ward gravitational acceleration velocities
 	player.velocity.y += gravity * delta
-	
-	# Handle mid-air tracking control adjustments
+
 	var direction = Input.get_axis("move_left", "move_right")
 	player.velocity.x = move_toward(player.velocity.x, direction * SPEED, ACCELERATION * delta)
-	
-	# Orient texture facing direction mid-flight
+
 	if direction != 0:
 		sprite.flip_h = (direction < 0)
 
-	# Transition Boundary: Solid contact boundary is successfully resolved under player collision shape
 	if player.is_on_floor():
-		# Determine subsequent state assignment based purely on current user intent inputs
+		# Land in move or idle depending on whether the player is still holding a direction.
 		if direction == 0:
 			state_machine.transition_to("idle")
 		else:
