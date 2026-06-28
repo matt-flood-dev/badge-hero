@@ -7,9 +7,11 @@
 [ext_resource type="PackedScene" uid="uid://dperk23ulufsd" path="res://src/objects/door/yellow_door.tscn" id="5_wr3og"]
 [ext_resource type="PackedScene" uid="uid://bislx6lc66fnf" path="res://src/objects/badge/badge.tscn" id="6_hkv0b"]
 [ext_resource type="Script" uid="uid://ct7kln2v6bm8n" path="res://src/levels/kill_floor.gd" id="7_8k84k"]
-[ext_resource type="PackedScene" uid="uid://k84buydxp5dw" path="res://src/ui/heart/heart.tscn" id="8_j17hi"]
+[ext_resource type="PackedScene" uid="uid://k84buydxp5dw" path="res://src/ui/hud/heart.tscn" id="8_j17hi"]
 [ext_resource type="PackedScene" uid="uid://dh5yikie6a60t" path="res://src/actors/enemy/enemy.tscn" id="9_enemy"]
-[ext_resource type="PackedScene" uid="uid://cgameover1screen" path="res://src/ui/game_over/game_over.tscn" id="10_gameover"]
+[ext_resource type="PackedScene" uid="uid://b3b4ha7mklb14" path="res://src/ui/menus/game_over.tscn" id="10_gameover"]
+[ext_resource type="PackedScene" uid="uid://bwmw85hul2dau" path="res://src/ui/hud/objectives.tscn" id="11_objective"]
+[ext_resource type="PackedScene" uid="uid://dlipn8lfncsq" path="res://src/ui/menus/victory.tscn" id="12_victory"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_q35l7"]
 texture = ExtResource("2_jimqh")
@@ -1060,10 +1062,10 @@ shape = SubResource("WorldBoundaryShape2D_j17hi")
 [node name="HUD" type="CanvasLayer" parent="." unique_id=369160324]
 
 [node name="MarginContainer" type="MarginContainer" parent="HUD" unique_id=1981903707]
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 88.0
+offset_bottom = 47.0
 theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
+theme_override_constants/margin_top = 8
 
 [node name="HeartsContainer" type="HBoxContainer" parent="HUD/MarginContainer" unique_id=1044221035]
 layout_mode = 2
@@ -1078,4 +1080,9 @@ layout_mode = 2
 [node name="Heart3" parent="HUD/MarginContainer/HeartsContainer" unique_id=161113680 instance=ExtResource("8_j17hi")]
 layout_mode = 2
 
-[node name="GameOverScreen" parent="." instance=ExtResource("10_gameover")]
+[node name="ObjectiveHud" parent="HUD" unique_id=1682120014 instance=ExtResource("11_objective")]
+offset_bottom = 40.0
+
+[node name="GameOverScreen" parent="." unique_id=1015961123 instance=ExtResource("10_gameover")]
+
+[node name="VictoryScreen" parent="." instance=ExtResource("12_victory")]

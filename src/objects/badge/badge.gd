@@ -12,6 +12,7 @@ var is_revealed: bool = false
 
 # --- LIFECYCLE CALLBACKS ---
 func _ready() -> void:
+	GameManager.register_level_badge()
 	monitoring = false
 	body_entered.connect(_on_body_entered)
 	GameManager.enemy_defeated.connect(_reveal_badge)
@@ -44,10 +45,6 @@ func _on_body_entered(body: Node2D) -> void:
 
 # Locks down player movement or states and runs the final level completion sequences
 func _trigger_level_victory() -> void:
-	print("VICTORY! Level-Ending Badge collected successfully.")
-
 	set_deferred("monitoring", false)
-
-	print("Transitioning to the next staging zone...")
-
+	GameManager.collect_badge()
 	queue_free()

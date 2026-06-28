@@ -1,0 +1,91 @@
+[gd_scene format=3 uid="uid://bwmw85hul2dau"]
+
+[ext_resource type="Script" uid="uid://cphefvl8ipdyj" path="res://src/ui/hud/objectives.gd" id="1_t30xl"]
+[ext_resource type="Texture2D" uid="uid://c5hcpgnnsb23y" path="res://assets/textures/platformPack_tilesheet.png" id="2_affog"]
+[ext_resource type="Texture2D" uid="uid://620824yrojla" path="res://assets/textures/flat.png" id="3_570ls"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gem"]
+atlas = ExtResource("2_affog")
+region = Rect2(512, 208, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_key"]
+atlas = ExtResource("2_affog")
+region = Rect2(512, 272, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_badge"]
+atlas = ExtResource("3_570ls")
+region = Rect2(0, 78, 42, 74)
+
+[node name="ObjectiveHud" type="Control" unique_id=544513969]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_bottom = 44.0
+grow_horizontal = 2
+script = ExtResource("1_t30xl")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1536840049]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 40.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=1636799154]
+layout_mode = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="GemCounter" type="HBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=646465264]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/HBoxContainer/GemCounter" unique_id=325928453]
+custom_minimum_size = Vector2(32, 16)
+layout_mode = 2
+texture = SubResource("AtlasTexture_gem")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/GemCounter" unique_id=1608912826]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "0/5"
+vertical_alignment = 1
+
+[node name="KeyCounter" type="HBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=1822831547]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/HBoxContainer/KeyCounter" unique_id=1770777900]
+custom_minimum_size = Vector2(32, 16)
+layout_mode = 2
+texture = SubResource("AtlasTexture_key")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/KeyCounter" unique_id=1831242235]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "0/1"
+vertical_alignment = 1
+
+[node name="BadgeCounter" type="HBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=1934059951]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/HBoxContainer/BadgeCounter" unique_id=1114611229]
+custom_minimum_size = Vector2(16, 24)
+layout_mode = 2
+texture = SubResource("AtlasTexture_badge")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/BadgeCounter" unique_id=414052268]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "--"
+vertical_alignment = 1

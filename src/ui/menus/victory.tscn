@@ -1,12 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://cgameover1screen"]
+[gd_scene format=3 uid="uid://dlipn8lfncsq"]
 
-[ext_resource type="Script" path="res://src/ui/game_over/game_over.gd" id="1_gameover"]
+[ext_resource type="Script" uid="uid://bxfx8ghf50fhf" path="res://src/ui/menus/victory.gd" id="1_victory"]
 
-[node name="GameOverScreen" type="CanvasLayer"]
+[node name="VictoryScreen" type="CanvasLayer"]
 layer = 100
 process_mode = 3
 visible = false
-script = ExtResource("1_gameover")
+script = ExtResource("1_victory")
 
 [node name="Overlay" type="Control" parent="."]
 layout_mode = 3
@@ -25,7 +25,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.6)
 
-[node name="GameOverLabel" type="Label" parent="Overlay"]
+[node name="VictoryLabel" type="Label" parent="Overlay"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -39,6 +39,6 @@ offset_bottom = 30.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 48
-text = "GAME OVER"
+text = "VICTORY!"
 horizontal_alignment = 1
 vertical_alignment = 1

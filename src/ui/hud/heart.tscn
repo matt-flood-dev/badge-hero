@@ -1,20 +1,20 @@
 [gd_scene format=3 uid="uid://k84buydxp5dw"]
 
-[ext_resource type="Texture2D" uid="uid://c5hcpgnnsb23y" path="res://assets/textures/platformPack_tilesheet.png" id="1_asaob"]
-[ext_resource type="Script" uid="uid://wxf6oqwx6pnc" path="res://src/ui/heart/heart.gd" id="1_v2fpr"]
+[ext_resource type="Script" uid="uid://wxf6oqwx6pnc" path="res://src/ui/hud/heart.gd" id="1_ew2my"]
+[ext_resource type="Texture2D" uid="uid://c5hcpgnnsb23y" path="res://assets/textures/platformPack_tilesheet.png" id="2_obc4l"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v2fpr"]
-atlas = ExtResource("1_asaob")
+atlas = ExtResource("2_obc4l")
 region = Rect2(720, 272, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_asaob"]
-atlas = ExtResource("1_asaob")
+atlas = ExtResource("2_obc4l")
 region = Rect2(720, 144, 32, 32)
 
 [node name="Heart" type="Control" unique_id=390860527]
 layout_mode = 3
 anchors_preset = 0
-script = ExtResource("1_v2fpr")
+script = ExtResource("1_ew2my")
 
 [node name="FullHeart" type="TextureRect" parent="." unique_id=1204316214]
 layout_mode = 0
