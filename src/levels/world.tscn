@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dperk23ulufsd" path="res://src/objects/door/yellow_door.tscn" id="5_wr3og"]
 [ext_resource type="PackedScene" uid="uid://bislx6lc66fnf" path="res://src/objects/badge/badge.tscn" id="6_hkv0b"]
 [ext_resource type="Script" uid="uid://ct7kln2v6bm8n" path="res://src/levels/kill_floor.gd" id="7_8k84k"]
+[ext_resource type="PackedScene" uid="uid://k84buydxp5dw" path="res://src/ui/heart/heart.tscn" id="8_j17hi"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_q35l7"]
 texture = ExtResource("2_jimqh")
@@ -1049,3 +1050,24 @@ script = ExtResource("7_8k84k")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KillFloor" unique_id=1867864109]
 position = Vector2(0, 360)
 shape = SubResource("WorldBoundaryShape2D_j17hi")
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=369160324]
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD" unique_id=1981903707]
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+
+[node name="HeartsContainer" type="HBoxContainer" parent="HUD/MarginContainer" unique_id=1044221035]
+layout_mode = 2
+theme_override_constants/separation = 36
+
+[node name="Heart1" parent="HUD/MarginContainer/HeartsContainer" unique_id=390860527 instance=ExtResource("8_j17hi")]
+layout_mode = 2
+
+[node name="Heart2" parent="HUD/MarginContainer/HeartsContainer" unique_id=986054634 instance=ExtResource("8_j17hi")]
+layout_mode = 2
+
+[node name="Heart3" parent="HUD/MarginContainer/HeartsContainer" unique_id=161113680 instance=ExtResource("8_j17hi")]
+layout_mode = 2

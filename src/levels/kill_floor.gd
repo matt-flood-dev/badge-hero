@@ -35,6 +35,9 @@ func _on_body_entered(body: Node2D) -> void:
 func _process_player_hazard_fall(player: Node2D) -> void:
 	print("Player plummeted into the hazard zone!")
 	
-	# Temporary verification sequence before we implement the health/death loop
-	# For now, we will simply reset the player's position to test it
-	player.global_position = Vector2(100, 100)
+	if player.has_method("take_damage"):
+		player.take_damage(1)
+
+		# Reposition without refilling health so hazard damage persists
+		if player.current_health > 0 and player.has_method("return_to_spawn"):
+			player.return_to_spawn()

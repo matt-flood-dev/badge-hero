@@ -30,8 +30,9 @@ drag_top_margin = 0.1
 drag_right_margin = 0.1
 drag_bottom_margin = 0.1
 
-[node name="StateMachine" type="Node" parent="." unique_id=1888727584]
+[node name="StateMachine" type="Node" parent="." unique_id=1888727584 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("3_8tnyb")
+initial_state = NodePath("Idle")
 
 [node name="Idle" type="Node" parent="StateMachine" unique_id=1113237134]
 script = ExtResource("4_qdy1o")
