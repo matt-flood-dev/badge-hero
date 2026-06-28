@@ -1,6 +1,6 @@
 # Badge Hero
 
-#### Video Demo: TODO — add your YouTube URL before submitting to CS50
+#### Video Demo: https://youtu.be/mlJHCrQ9ZpE
 
 #### Description
 
@@ -157,15 +157,3 @@ Art assets are from **[Kenney](https://kenney.nl/)** (Platformer Pack / related 
 ## AI Tools Used
 
 Per CS50 policy, AI-based tools were used as helpers during development. **Cursor** (with Claude) assisted with drafting GDScript, scene wiring, menu systems, enemy logic, README documentation, and code review suggestions. All generated code was reviewed, tested in Godot, and adapted by the author. AI assistance is also cited in comments at the top of each `.gd` file under `src/`.
-
----
-
-## Submitting to CS50
-
-From the project root (the folder containing this `README.md`):
-
-```
-submit50 cs50/problems/2026/x/project
-```
-
-After submitting, visit [cs50.me/cs50x](https://cs50.me/cs50x) to confirm the gradebook shows completion. Remember to replace the video URL placeholder above and submit the CS50 video form before the course deadline.
