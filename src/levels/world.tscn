@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cgivehd725jdv" path="res://src/objects/key/yellow_key.tscn" id="4_j8oow"]
 [ext_resource type="PackedScene" uid="uid://dperk23ulufsd" path="res://src/objects/door/yellow_door.tscn" id="5_wr3og"]
 [ext_resource type="PackedScene" uid="uid://bislx6lc66fnf" path="res://src/objects/badge/badge.tscn" id="6_hkv0b"]
+[ext_resource type="Script" uid="uid://ct7kln2v6bm8n" path="res://src/levels/kill_floor.gd" id="7_8k84k"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_q35l7"]
 texture = ExtResource("2_jimqh")
@@ -1005,6 +1006,9 @@ texture = ExtResource("2_jimqh")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_q35l7")
 
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_j17hi"]
+distance = -10.0
+
 [node name="World" type="Node2D" unique_id=877433087]
 
 [node name="Player" parent="." unique_id=462487894 instance=ExtResource("1_qd0h3")]
@@ -1038,3 +1042,10 @@ position = Vector2(1085, -160)
 
 [node name="Badge" parent="." unique_id=707586810 instance=ExtResource("6_hkv0b")]
 position = Vector2(1268, -148)
+
+[node name="KillFloor" type="Area2D" parent="." unique_id=202324989]
+script = ExtResource("7_8k84k")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillFloor" unique_id=1867864109]
+position = Vector2(0, 360)
+shape = SubResource("WorldBoundaryShape2D_j17hi")
