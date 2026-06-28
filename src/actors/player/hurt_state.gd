@@ -31,6 +31,12 @@ func physics_update(delta: float) -> void:
 	if hurt_timer >= HURT_DURATION:
 		player.is_invincible = false
 		player.knockback_from = Vector2.ZERO
+
+		if player.pending_spawn_after_hurt:
+			player.return_to_spawn()
+			state_machine.transition_to("idle")
+			return
+
 		if player.is_on_floor():
 			state_machine.transition_to("idle")
 		else:

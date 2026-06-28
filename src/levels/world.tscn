@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://ct7kln2v6bm8n" path="res://src/levels/kill_floor.gd" id="7_8k84k"]
 [ext_resource type="PackedScene" uid="uid://k84buydxp5dw" path="res://src/ui/heart/heart.tscn" id="8_j17hi"]
 [ext_resource type="PackedScene" uid="uid://dh5yikie6a60t" path="res://src/actors/enemy/enemy.tscn" id="9_enemy"]
+[ext_resource type="PackedScene" uid="uid://cgameover1screen" path="res://src/ui/game_over/game_over.tscn" id="10_gameover"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_q35l7"]
 texture = ExtResource("2_jimqh")
@@ -1076,3 +1077,5 @@ layout_mode = 2
 
 [node name="Heart3" parent="HUD/MarginContainer/HeartsContainer" unique_id=161113680 instance=ExtResource("8_j17hi")]
 layout_mode = 2
+
+[node name="GameOverScreen" parent="." instance=ExtResource("10_gameover")]

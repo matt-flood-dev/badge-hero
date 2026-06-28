@@ -34,10 +34,6 @@ func _on_body_entered(body: Node2D) -> void:
 # Handles the execution sequence when the player trips the kill floor boundary
 func _process_player_hazard_fall(player: Node2D) -> void:
 	print("Player plummeted into the hazard zone!")
-	
-	if player.has_method("take_damage"):
-		player.take_damage(1)
 
-		# Reposition without refilling health so hazard damage persists
-		if player.current_health > 0 and player.has_method("return_to_spawn"):
-			player.return_to_spawn()
+	if player.has_method("apply_hazard_fall"):
+		player.apply_hazard_fall(global_position)

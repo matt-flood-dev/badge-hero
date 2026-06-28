@@ -3,6 +3,8 @@ extends Node
 # --- SIGNALS ---
 signal gem_collected(current_count: int, total_required: int)
 signal key_obtained()
+signal enemy_defeated()
+signal game_over()
 signal level_reset()
 
 
@@ -13,6 +15,7 @@ const TOTAL_GEMS_IN_LEVEL: int = 5
 # --- DATA & REFERENCES ---
 var gems_collected: int = 0
 var has_key: bool = false
+var is_game_over: bool = false
 
 
 # --- LIFECYCLE CALLBACKS ---
@@ -30,6 +33,7 @@ func _ready() -> void:
 func reset_game_state() -> void:
 	gems_collected = 0
 	has_key = false
+	is_game_over = false
 	level_reset.emit()
 
 
@@ -45,8 +49,24 @@ func obtain_key() -> void:
 	print("Objective Key secured. Level progression unlocked.")
 
 
-# Resets progress and reloads the current level scene from scratch.
+func notify_enemy_defeated() -> void:
+	enemy_defeated.emit()
+	print("Enemy defeated! The level badge has materialised.")
+
+
+# Pauses the level and shows the game over screen.
 func handle_player_death(_player: Node2D = null) -> void:
-	print("Player health depleted. Reloading level...")
+	if is_game_over:
+		return
+
+	is_game_over = true
+	print("Player health depleted. Game over.")
+	get_tree().paused = true
+	game_over.emit()
+
+
+# Unpauses and reloads the current level from scratch.
+func restart_game() -> void:
 	reset_game_state()
-	get_tree().call_deferred("reload_current_scene")
+	get_tree().paused = false
+	get_tree().reload_current_scene()

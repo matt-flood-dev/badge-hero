@@ -14,6 +14,7 @@ var current_health: int = max_health
 var spawn_position: Vector2
 var is_invincible: bool = false
 var knockback_from: Vector2 = Vector2.ZERO
+var pending_spawn_after_hurt: bool = false
 
 @onready var state_machine: StateMachine = $StateMachine
 @onready var hearts_container: HBoxContainer = get_node("/root/World/HUD/MarginContainer/HeartsContainer")
@@ -45,6 +46,7 @@ func take_damage(amount: int, from_global_position: Vector2 = Vector2.ZERO) -> v
 	_update_health_ui()
 
 	if current_health <= 0:
+		pending_spawn_after_hurt = false
 		died.emit()
 		GameManager.handle_player_death(self)
 		return
@@ -57,10 +59,20 @@ func take_damage(amount: int, from_global_position: Vector2 = Vector2.ZERO) -> v
 	state_machine.transition_to("hurt")
 
 
+# Applies kill-floor damage and respawns at spawn once the hurt state completes.
+func apply_hazard_fall(from_global_position: Vector2) -> void:
+	if current_health <= 0 or is_invincible:
+		return
+
+	pending_spawn_after_hurt = true
+	take_damage(1, from_global_position)
+
+
 # Moves the player back to their spawn point without altering health.
 func return_to_spawn() -> void:
 	global_position = spawn_position
 	velocity = Vector2.ZERO
+	pending_spawn_after_hurt = false
 
 
 # --- PRIVATE METHODS ---

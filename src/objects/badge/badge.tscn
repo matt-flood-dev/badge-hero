@@ -7,6 +7,7 @@
 size = Vector2(19, 36)
 
 [node name="Badge" type="Area2D" unique_id=707586810]
+visible = false
 script = ExtResource("1_yd7my")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=510149682]

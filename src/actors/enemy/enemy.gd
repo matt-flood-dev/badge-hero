@@ -210,3 +210,4 @@ func _defeat_enemy(player: Node2D) -> void:
 # Cleans up the enemy node once the non-looping death animation completes
 func _on_death_animation_finished() -> void:
 	queue_free()
+	GameManager.notify_enemy_defeated.call_deferred()
