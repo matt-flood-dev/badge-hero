@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://bislx6lc66fnf"]
+
+[ext_resource type="Texture2D" uid="uid://620824yrojla" path="res://assets/textures/flat.png" id="1_inpaq"]
+[ext_resource type="Script" uid="uid://cngbo4sih5p18" path="res://src/objects/badge/badge.gd" id="1_yd7my"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qk1ha"]
+size = Vector2(19, 36)
+
+[node name="Badge" type="Area2D" unique_id=707586810]
+script = ExtResource("1_yd7my")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=510149682]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_inpaq")
+region_enabled = true
+region_rect = Rect2(0, 78, 42, 74)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=700440140]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_qk1ha")

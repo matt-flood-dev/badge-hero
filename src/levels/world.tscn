@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dr0wgmicprpxm" path="res://src/objects/gem/yellow_gem.tscn" id="3_q35l7"]
 [ext_resource type="PackedScene" uid="uid://cgivehd725jdv" path="res://src/objects/key/yellow_key.tscn" id="4_j8oow"]
 [ext_resource type="PackedScene" uid="uid://dperk23ulufsd" path="res://src/objects/door/yellow_door.tscn" id="5_wr3og"]
+[ext_resource type="PackedScene" uid="uid://bislx6lc66fnf" path="res://src/objects/badge/badge.tscn" id="6_hkv0b"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_q35l7"]
 texture = ExtResource("2_jimqh")
@@ -1034,3 +1035,6 @@ position = Vector2(84, 253)
 
 [node name="YellowDoor" parent="." unique_id=477278692 instance=ExtResource("5_wr3og")]
 position = Vector2(1085, -160)
+
+[node name="Badge" parent="." unique_id=707586810 instance=ExtResource("6_hkv0b")]
+position = Vector2(1268, -148)
