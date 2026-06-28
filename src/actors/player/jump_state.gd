@@ -1,6 +1,8 @@
 class_name JumpState
 extends PlayerState
 
+# AI assistance: Portions of this script were drafted with Cursor AI and reviewed by the author.
+
 # --- SIGNALS ---
 
 

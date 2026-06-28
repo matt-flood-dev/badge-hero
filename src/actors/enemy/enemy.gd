@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+# AI assistance: Portions of this script were drafted with Cursor AI and reviewed by the author.
+
 # --- SIGNALS ---
 
 

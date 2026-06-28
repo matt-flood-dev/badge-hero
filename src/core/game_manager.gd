@@ -1,5 +1,7 @@
 extends Node
 
+# AI assistance: Portions of this script were drafted with Cursor AI and reviewed by the author.
+
 # --- SIGNALS ---
 # Autoload singleton that tracks level progress and broadcasts changes to the HUD and menus.
 signal gem_collected(current_count: int, total_required: int)
