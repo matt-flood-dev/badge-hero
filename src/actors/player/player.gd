@@ -24,12 +24,23 @@ var pending_spawn_after_hurt: bool = false
 func _ready() -> void:
 	spawn_position = global_position
 	current_health = max_health
-	# Hearts may not be ready on the same frame, so update the HUD after the scene settles.
+	# Default to hidden cursor during gameplay; the mouse input can toggle it back on.
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	call_deferred("_update_health_ui")
 	health_changed.emit(current_health)
 
 
 # --- INPUT HANDLING ---
+func _unhandled_input(event: InputEvent) -> void:
+	if not event.is_action_pressed("mouse", false, true):
+		return
+
+	# Block toggling during end screens, but allow it while paused via the pause menu script.
+	if GameManager.is_game_over or GameManager.is_victory:
+		return
+
+	GameManager.toggle_mouse_visibility()
+	get_viewport().set_input_as_handled()
 
 
 # --- UPDATE LOOPS ---

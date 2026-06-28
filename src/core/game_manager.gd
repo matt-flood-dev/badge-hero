@@ -29,10 +29,16 @@ var is_paused: bool = false
 
 # --- LIFECYCLE CALLBACKS ---
 func _ready() -> void:
+	# Keep receiving input while paused so Escape can quit from any screen.
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	reset_game_state()
 
 
 # --- INPUT HANDLING ---
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("close", false, true):
+		quit_game()
+		get_viewport().set_input_as_handled()
 
 
 # --- UPDATE LOOPS ---
@@ -116,6 +122,13 @@ func unpause_game() -> void:
 	pause_closed.emit()
 
 
+func toggle_mouse_visibility() -> void:
+	if Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
+		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
+
 func handle_player_death(_player: Node2D = null) -> void:
 	if is_game_over or is_victory:
 		return
@@ -147,6 +160,10 @@ func restart_game() -> void:
 	reset_game_state()
 	get_tree().paused = false
 	get_tree().reload_current_scene()
+
+
+func quit_game() -> void:
+	get_tree().quit()
 
 
 # --- PRIVATE METHODS ---

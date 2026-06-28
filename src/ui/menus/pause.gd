@@ -20,12 +20,17 @@ func _ready() -> void:
 
 # --- INPUT HANDLING ---
 func _unhandled_input(event: InputEvent) -> void:
-	if not event.is_action_pressed("pause", false, true):
+	if event.is_action_pressed("pause", false, true):
+		GameManager.toggle_pause()
+		get_viewport().set_input_as_handled()
 		return
 
-	# Same input toggles pause on and off.
-	GameManager.toggle_pause()
-	get_viewport().set_input_as_handled()
+	if event.is_action_pressed("mouse", false, true):
+		if not GameManager.is_paused:
+			return
+
+		GameManager.toggle_mouse_visibility()
+		get_viewport().set_input_as_handled()
 
 
 # --- UPDATE LOOPS ---
