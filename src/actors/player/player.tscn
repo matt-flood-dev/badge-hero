@@ -7,13 +7,15 @@
 [ext_resource type="Script" uid="uid://k46csmfhio7" path="res://src/actors/player/move_state.gd" id="5_nq65r"]
 [ext_resource type="Script" uid="uid://b7ev6jbqhock0" path="res://src/actors/player/jump_state.gd" id="6_wabo4"]
 [ext_resource type="Script" uid="uid://bp6dp5pupbuma" path="res://src/actors/player/fall_state.gd" id="7_b2jwx"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8tnyb"]
-size = Vector2(63, 80)
+[ext_resource type="Script" path="res://src/actors/player/hurt_state.gd" id="8_hurt"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8tnyb"]
 atlas = ExtResource("1_tps1c")
 region = Rect2(560, 0, 80, 110)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mfqm3"]
+atlas = ExtResource("1_tps1c")
+region = Rect2(320, 0, 80, 110)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qdy1o"]
 atlas = ExtResource("1_tps1c")
@@ -39,6 +41,14 @@ animations = [{
 }],
 "loop": true,
 "name": &"fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mfqm3")
+}],
+"loop": true,
+"name": &"hurt",
 "speed": 5.0
 }, {
 "frames": [{
@@ -69,14 +79,15 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8tnyb"]
+size = Vector2(63, 80)
+
 [node name="Player" type="CharacterBody2D" unique_id=462487894]
 script = ExtResource("1_1x8di")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1556009566]
-visible = false
-texture = ExtResource("1_tps1c")
-hframes = 9
-vframes = 3
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1461365685]
+sprite_frames = SubResource("SpriteFrames_mfqm3")
+animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1230474143]
 position = Vector2(0.5, 15)
@@ -105,6 +116,5 @@ script = ExtResource("6_wabo4")
 [node name="Fall" type="Node" parent="StateMachine" unique_id=662148000]
 script = ExtResource("7_b2jwx")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1461365685]
-sprite_frames = SubResource("SpriteFrames_mfqm3")
-animation = &"fall"
+[node name="Hurt" type="Node" parent="StateMachine"]
+script = ExtResource("8_hurt")

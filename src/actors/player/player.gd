@@ -12,7 +12,10 @@ signal died
 # --- DATA & REFERENCES ---
 var current_health: int = max_health
 var spawn_position: Vector2
+var is_invincible: bool = false
+var knockback_from: Vector2 = Vector2.ZERO
 
+@onready var state_machine: StateMachine = $StateMachine
 @onready var hearts_container: HBoxContainer = get_node("/root/World/HUD/MarginContainer/HeartsContainer")
 
 
@@ -33,8 +36,8 @@ func _physics_process(_delta: float) -> void:
 
 
 # --- PUBLIC METHODS ---
-func take_damage(amount: int) -> void:
-	if current_health <= 0:
+func take_damage(amount: int, from_global_position: Vector2 = Vector2.ZERO) -> void:
+	if current_health <= 0 or is_invincible:
 		return
 
 	current_health = clampi(current_health - amount, 0, max_health)
@@ -44,6 +47,14 @@ func take_damage(amount: int) -> void:
 	if current_health <= 0:
 		died.emit()
 		GameManager.handle_player_death(self)
+		return
+
+	if from_global_position != Vector2.ZERO:
+		knockback_from = global_position - from_global_position
+	else:
+		knockback_from = Vector2.ZERO
+
+	state_machine.transition_to("hurt")
 
 
 # Moves the player back to their spawn point without altering health.
